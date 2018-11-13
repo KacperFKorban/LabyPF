@@ -42,8 +42,9 @@ concat'' (x:xs) = x ++ concat'' xs
 
 concat''' :: [[a]] -> [a]
 concat''' = helper []
-    where helper acc []     = acc
-          helper acc (x:xs) = helper (acc ++ x) xs
+    where 
+        helper acc []     = acc
+        helper acc (x:xs) = helper (acc ++ x) xs
 
 isSorted :: [Int] -> Bool
 isSorted []       = True
@@ -59,10 +60,18 @@ zip' _ []          = []
 zip' [] _          = []
 zip' (x:xs) (y:ys) = (x, y) : zip' xs ys
 
+zip'' :: [a] -> [b] -> [(a,b)]
+zip'' = go []
+        where 
+            go acc [] _          = acc
+            go acc _ []          = acc
+            go acc (x:xs) (y:ys) = go (acc ++ [(x,y)]) xs ys
+
 unzip' :: [(a, b)] -> ([a],[b])
 unzip' = helper [] []
-    where helper acc1 acc2 [] = (acc1, acc2)
-          helper acc1 acc2 ((x, y):xs) = helper (acc1 ++ [x]) (acc2 ++ [y]) xs
+    where 
+        helper acc1 acc2 [] = (acc1, acc2)
+        helper acc1 acc2 ((x, y):xs) = helper (acc1 ++ [x]) (acc2 ++ [y]) xs
 
 zip3' :: [a] -> [b] -> [c] -> [(a,b,c)]
 zip3' _ _ [] = []
@@ -77,8 +86,9 @@ subList p t@(x:xs)
         | length p > length t = False
         | isStartedWith p t   = True
         | otherwise           = subList p xs
-        where isStartedWith [] _ = True
-              isStartedWith _ [] = False
-              isStartedWith (p:ps) (x:xs)
+        where 
+            isStartedWith [] _ = True
+            isStartedWith _ [] = False
+            isStartedWith (p:ps) (x:xs)
                         | p /= x    = False
                         | otherwise = isStartedWith ps xs
