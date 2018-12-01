@@ -9,11 +9,8 @@ funcFactory n = case n of
         _ -> const n
         where   intFunc x = x^5
 
-fact 0 = 1
-fact x = x * fact (x-1)
-
 expApproxUpTo :: Int -> Double -> Double
-expApproxUpTo n x = sum $ map (\k -> x ^ k / (fromIntegral $ fact k)) [0..n]
+expApproxUpTo n x = sum $ map (\k -> x ^ k / (fromIntegral $ product [1..k])) [0..n]
 
 dfr :: (Double -> Double) -> Double -> (Double -> Double)
 dfr f h = \x -> (f (x + h) - f h) / h

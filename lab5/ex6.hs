@@ -30,6 +30,6 @@ instance Functor GTree where
   fmap f (GNode bs) = GNode (fmap (fmap f) bs)
 
 {-
-instance Functor ((->) a) where
+instance Functor ((->) r) where
   fmap f g = f . g
 -}

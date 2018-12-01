@@ -23,21 +23,15 @@ length' (x:xs) = 1 + length' xs
 
 or' :: [Bool] -> Bool
 or' []     = False
-or' (x:xs) = case x of
-                True -> True
-                _    -> or' xs
+or' (x:xs) = x || or' xs
 
 and' :: [Bool] -> Bool
 and' [] = True
-and' (x:xs) = case x of
-                False -> False
-                _     -> and' xs
+and' (x:xs) = x && and' xs
 
 elem' :: Eq a => a -> [a] -> Bool
 elem' _ [] = False
-elem' e (x:xs)
-        | e == x    = True
-        | otherwise = elem' e xs
+elem' e (x:xs) = e == x || elem' e xs
 
 doubleAll :: Num t => [t] -> [t]
 doubleAll []     = []
