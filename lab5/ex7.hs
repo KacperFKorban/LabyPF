@@ -24,3 +24,19 @@ instance Applicative ((->) r) where
   f <*> g = (\x -> f x (g x))
 -}
 
+data Tree2 a = EmptyT2 | Leaf a | Node (Tree2 a) a (Tree2 a) deriving Show
+
+instance Functor Tree2 where
+  fmap _ EmptyT2      = EmptyT2
+  fmap f (Leaf a)     = Leaf (f a)
+  fmap f (Node l a r) = Node (fmap f l) (f a) (fmap f r)
+
+--Zip
+instance Applicative Tree2 where
+  pure a = Leaf a
+  EmptyT2 <*> _ = EmptyT2
+  (<*>) _ EmptyT2 = EmptyT2
+  (Leaf f) <*> (Leaf a) = Leaf $ f a
+  (Leaf f) <*> (Node _ a _) = Leaf $ f a
+  (Node _ f _) <*> (Leaf a) = Leaf $ f a
+  (Node lf f rf) <*> (Node la a ra) = Node (lf <*> la) (f a) (rf <*> ra)
